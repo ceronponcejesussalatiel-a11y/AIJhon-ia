@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrera de Inteligencia Artificial - CBTIS 222</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .highlight-box h2 {
+            color: white;
+            border-bottom: 3px solid rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+        
+        .highlight-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .nav-button {
+            background: white;
+            color: #667eea;
+            padding: 20px;
+            border: 3px solid #667eea;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .nav-button:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .nav-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .content-frame {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 30px 0;
+            min-height: 400px;
+            display: none;
+        }
+        
+        .content-frame.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .content-frame h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 2em;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 15px;
+        }
+        
+        .content-frame h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .content-frame p {
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #555;
+            font-size: 1.05em;
+        }
+        
+        .content-frame ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .content-frame li {
+            margin-bottom: 12px;
+            color: #555;
+            position: relative;
+            padding-left: 10px;
+            font-size: 1.05em;
+        }
+        
+        .content-frame li::before {
+            content: "▸";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+        
+        .icon-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .icon-frame {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+        }
+        
+        footer p {
+            color: #666;
+            margin: 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo-calavera.jpeg" alt="Logo CBTIS 222">
+        </div>
+        <h1>Inteligencia Artificial</h1>
+        <p class="subtitle">Centro de Bachillerato Tecnológico Industrial y de Servicios No. 222</p>
+    </header>
+
+    <div class="container">
+        <div class="highlight-box">
+            <h2>🚀 El Futuro de la Tecnología en Hidalgo</h2>
+            <p>El estado de Hidalgo está experimentando una transformación digital sin precedentes. Con el crecimiento de parques tecnológicos y la inversión en innovación, la demanda de profesionales en Inteligencia Artificial está en constante aumento. Nuestra carrera te prepara para ser protagonista de esta revolución tecnológica.</p>
+        </div>
+
+        <div class="button-grid">
+            <button class="nav-button active" onclick="showFrame('que-es')">¿Qué es la IA?</button>
+            <button class="nav-button" onclick="showFrame('aprenderás')">¿Qué Aprenderás?</button>
+            <button class="nav-button" onclick="showFrame('oportunidades')">Oportunidades en Hidalgo</button>
+            <button class="nav-button" onclick="showFrame('campo-laboral')">Campo Laboral</button>
+            <button class="nav-button" onclick="showFrame('por-que')">¿Por Qué Elegir Esta Carrera?</button>
+        </div>
+
+        <!-- Frame: ¿Qué es la IA? -->
+        <div id="que-es" class="content-frame active">
+            <div class="icon-header">
+                <div class="icon-frame">🤖</div>
+                <h2>¿Qué es la Inteligencia Artificial?</h2>
+            </div>
+            <p>La Inteligencia Artificial es la capacidad de las máquinas para realizar tareas que normalmente requieren inteligencia humana: aprender, razonar, resolver problemas y tomar decisiones.</p>
+            <p>Es la tecnología que impulsa asistentes virtuales, vehículos autónomos, diagnósticos médicos avanzados y sistemas de recomendación que usamos diariamente.</p>
+            <h3>Aplicaciones Cotidianas</h3>
+            <ul>
+                <li>Asistentes virtuales como Siri, Alexa y Google Assistant</li>
+                <li>Sistemas de recomendación en Netflix, Spotify y YouTube</li>
+                <li>Reconocimiento facial en smartphones</li>
+                <li>Traductores automáticos</li>
+                <li>Filtros de spam en correo electrónico</li>
+                <li>Navegación GPS inteligente</li>
+            </ul>
+        </div>
+
+        <!-- Frame: ¿Qué Aprenderás? -->
+        <div id="aprenderás" class="content-frame">
+            <div class="icon-header">
+                <div class="icon-frame">📚</div>
+                <h2>¿Qué Aprenderás?</h2>
+            </div>
+            <p>Durante tu formación, desarrollarás habilidades técnicas en las áreas más demandadas de la industria tecnológica:</p>
+            
+            <h3>Programación y Desarrollo</h3>
+            <ul>
+                <li>Programación en Python y otros lenguajes modernos</li>
+                <li>Desarrollo de aplicaciones inteligentes</li>
+                <li>Estructuras de datos y algoritmos</li>
+            </ul>
+            
+            <h3>Inteligencia Artificial</h3>
+            <ul>
+                <li>Machine Learning (Aprendizaje automático)</li>
+                <li>Deep Learning (Aprendizaje profundo)</li>
+                <li>Redes neuronales artificiales</li>
+                <li>Procesamiento de lenguaje natural</li>
+                <li>Visión por computadora</li>
+            </ul>
+            
+            <h3>Datos y Análisis</h3>
+            <ul>
+                <li>Análisis de datos masivos (Big Data)</li>
+                <li>Visualización de datos</li>
+                <li>Bases de datos</li>
+            </ul>
+            
+            <h3>Tecnologías Emergentes</h3>
+            <ul>
+                <li>Robótica e Internet de las Cosas (IoT)</li>
+                <li>Desarrollo de chatbots</li>
+                <li>Automatización de procesos</li>
+            </ul>
+        </div>
+
+        <!-- Frame: Oportunidades en Hidalgo -->
+        <div id="oportunidades" class="content-frame">
+            <div class="icon-header">
+                <div class="icon-frame">🏙️</div>
+                <h2>Oportunidades en Hidalgo</h2>
+            </div>
+            <p>El estado de Hidalgo está posicionándose como un polo de desarrollo tecnológico en el centro de México, creando numerosas oportunidades para profesionales en Inteligencia Artificial.</p>
+            
+            <h3>Infraestructura Tecnológica</h3>
+            <ul>
+                <li>Parques tecnológicos en Pachuca y Tizayuca</li>
+                <li>Centros de innovación empresarial</li>
+                <li>Incubadoras de startups tecnológicas</li>
+                <li>Proyectos de ciudad inteligente</li>
+            </ul>
+            
+            <h3>Sectores en Crecimiento</h3>
+            <ul>
+                <li>Manufactura inteligente y automatización industrial</li>
+                <li>Sector automotriz con tecnología avanzada</li>
+                <li>Empresas de tecnología de la información</li>
+                <li>Comercio electrónico y retail digital</li>
+                <li>Servicios financieros y fintech</li>
+                <li>Agricultura inteligente y agrotecnología</li>
+            </ul>
+            
+            <h3>Ventaja Geográfica</h3>
+            <p>La cercanía de Hidalgo con la Ciudad de México y el corredor industrial del centro del país abre aún más oportunidades laborales, permitiéndote acceder a las mejores empresas de tecnología de la región sin tener que mudarte lejos de casa.</p>
+        </div>
+
+        <!-- Frame: Campo Laboral -->
+        <div id="campo-laboral" class="content-frame">
+            <div class="icon-header">
+                <div class="icon-frame">💼</div>
+                <h2>Campo Laboral</h2>
+            </div>
+            <p>Al concluir tus estudios, tendrás acceso a múltiples oportunidades profesionales en diversos sectores de la economía regional y nacional.</p>
+            
+            <h3>Puestos Disponibles</h3>
+            <ul>
+                <li><strong>Desarrollador de Inteligencia Artificial:</strong> Creación de sistemas y aplicaciones inteligentes</li>
+                <li><strong>Analista de Datos:</strong> Interpretación y análisis de información para toma de decisiones</li>
+                <li><strong>Ingeniero de Machine Learning:</strong> Desarrollo de modelos de aprendizaje automático</li>
+                <li><strong>Especialista en Automatización:</strong> Optimización de procesos mediante IA</li>
+                <li><strong>Desarrollador de Chatbots:</strong> Creación de asistentes virtuales</li>
+                <li><strong>Consultor Tecnológico:</strong> Asesoría en soluciones de IA</li>
+                <li><strong>Investigador de IA:</strong> Innovación y desarrollo de nuevas tecnologías</li>
+            </ul>
+            
+            <h3>Sectores que Contratan</h3>
+            <ul>
+                <li>Industria automotriz</li>
+                <li>Manufactura y producción</li>
+                <li>Servicios financieros</li>
+                <li>Retail y comercio electrónico</li>
+                <li>Salud y diagnóstico médico</li>
+                <li>Gobierno y sector público</li>
+                <li>Educación y EdTech</li>
+                <li>Startups y empresas de tecnología</li>
+            </ul>
+            
+            <h3>Expectativas Salariales</h3>
+            <p>Los profesionales en Inteligencia Artificial tienen algunos de los salarios más altos en el sector tecnológico, con oportunidades de crecimiento constante a medida que adquieren experiencia.</p>
+        </div>
+
+        <!-- Frame: ¿Por Qué Elegir? -->
+        <div id="por-que" class="content-frame">
+            <div class="icon-header">
+                <div class="icon-frame">⭐</div>
+                <h2>¿Por Qué Elegir Esta Carrera?</h2>
+            </div>
+            
+            <h3>🎯 Ventaja Competitiva Regional</h3>
+            <p>Serás de los primeros técnicos especializados en Inteligencia Artificial en Hidalgo, dándote una ventaja única en el mercado laboral de la región. Las empresas locales están buscando activamente este perfil profesional.</p>
+            
+            <h3>📈 Crecimiento Regional Acelerado</h3>
+            <p>Hidalgo está invirtiendo fuertemente en tecnología e innovación. Las empresas buscan talento local capacitado en IA para no tener que importarlo de otras regiones, lo que significa mejores oportunidades y condiciones para ti.</p>
+            
+            <h3>💰 Alta Demanda y Excelentes Salarios</h3>
+            <p>La IA es una de las áreas con mayor crecimiento laboral a nivel mundial. La demanda supera la oferta de profesionales capacitados, resultando en salarios competitivos desde el inicio de tu carrera.</p>
+            
+            <h3>🔄 Versatilidad Profesional</h3>
+            <p>Podrás trabajar en múltiples industrias: desde automotriz hasta salud, pasando por agricultura inteligente, comercio electrónico, manufactura y más. Tu especialización te abre puertas en prácticamente cualquier sector.</p>
+            
+            <h3>🚀 Innovación Constante</h3>
+            <p>Trabajarás con las tecnologías más avanzadas del momento y estarás a la vanguardia de la transformación digital. La IA está en constante evolución, lo que significa que siempre aprenderás algo nuevo.</p>
+            
+            <h3>🌍 Impacto Real en tu Comunidad</h3>
+            <p>Desarrollarás soluciones que mejoran la vida de las personas y transforman las empresas de tu comunidad y región. Tu trabajo tendrá un impacto tangible y visible.</p>
+            
+            <h3>🎓 Excelente Base para Estudios Superiores</h3>
+            <p>Esta carrera técnica te proporciona una base sólida para continuar con licenciaturas en Ciencias de la Computación, Ingeniería en Software, Ciencia de Datos o áreas relacionadas en las mejores universidades.</p>
+            
+            <h3>🔗 Conexión Estratégica</h3>
+            <p>La ubicación de Hidalgo te conecta con el corredor industrial del centro del país y la cercanía con la Ciudad de México, multiplicando tus oportunidades de empleo y networking profesional.</p>
+            
+            <h3>🌟 El Futuro es Ahora</h3>
+            <p>No solo aprenderás a programar, aprenderás a crear el futuro. La Inteligencia Artificial no es solo una carrera, es tu oportunidad de ser parte de la revolución tecnológica que está transformando Hidalgo, México y el mundo entero.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p style="font-weight: bold; font-size: 1.1em; color: #667eea;">CBTIS 222</p>
+        <p>Centro de Bachillerato Tecnológico Industrial y de Servicios No. 222</p>
+    </footer>
+
+    <script>
+        function showFrame(frameId) {
+            // Ocultar todos los frames
+            const frames = document.querySelectorAll('.content-frame');
+            frames.forEach(frame => {
+                frame.classList.remove('active');
+            });
+            
+            // Desactivar todos los botones
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Mostrar el frame seleccionado
+            document.getElementById(frameId).classList.add('active');
+            
+            // Activar el botón correspondiente
+            event.target.classList.add('active');
+            
+            // Scroll suave hacia el contenido
+            document.getElementById(frameId).scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        }
+    </script>
+</body>
+</html>
